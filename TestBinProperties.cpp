@@ -51,7 +51,7 @@ TEST(TestBinProperties,MeasurementTools){
     EXPECT_EQ(1,measurements.getWriteInterval());
 }
 
-TEST(TestBinProperties,SingleBin){
+TEST(TestBinProperties,DISABLED_SingleBin){
     std::ifstream file("../foam-1728.json");
     if(!file.is_open()){
         std::cout<<"File not found"<<std::endl;

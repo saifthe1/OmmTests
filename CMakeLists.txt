@@ -4,12 +4,12 @@ project(OmmTesting)
 
 #include files
 include_directories (/opt/google-test/include)
-include_directories (/home/ksb12101/openmm/openmm4.1/include)
+include_directories (/home/ksb12101/openmm/OpenMM/exec/include)
 INCLUDE_DIRECTORIES (/home/ksb12101/local/rapidjson/include)
 
 #include libraries to be linked
 LINK_DIRECTORIES (/usr/lib)
-LINK_DIRECTORIES (/home/ksb12101/openmm/openmm4.1/lib)
+LINK_DIRECTORIES (/home/ksb12101/openmm/OpenMM/exec/lib)
 ENABLE_TESTING()
 INCLUDE(CTest)
 

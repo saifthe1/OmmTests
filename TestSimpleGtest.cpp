@@ -2,16 +2,15 @@
 #include<stdio.h>
 #include "gtest/gtest.h"
 
-int simpleMultiply()
+int simpleMultiply(int num)
 {
-	int n = 4*4;
-	printf("Multiply %d",n);
+	int n = num*num;
 	return n;
 }
 
 TEST(SimpleNumberTest,One)
 {
-	EXPECT_EQ(16,simpleMultiply());
+	EXPECT_EQ(16,simpleMultiply(4));
 }
 
 int main(int argc, char **argv){
