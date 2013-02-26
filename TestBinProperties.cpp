@@ -51,7 +51,7 @@ TEST(TestBinProperties,MeasurementTools){
     EXPECT_EQ(1,measurements.getWriteInterval());
 }
 
-TEST(TestBinProperties,DISABLED_SingleBin){
+TEST(TestBinProperties,SingleBin){
     std::ifstream file("../foam-1728.json");
     if(!file.is_open()){
         std::cout<<"File not found"<<std::endl;
@@ -155,17 +155,14 @@ TEST(TestBinProperties,DISABLED_SingleBin){
         counter++;
         OpenMM::State state = context.getState(OpenMM::State::Energy);
         const double time = state.getTime();
-//        if(counter==writeinterval){
-            int* mola = context.getMeasurements().getMols();
-            OpenMM::Vec3* mom = context.getMeasurements().getBinMom();
-            double gpuKE = 0.0;
-            int gpuMol = 0.0;
-            for(int k=0;k<nbs;k++){
-                gpuMol += mola[k];
-            }
-            EXPECT_EQ(numParticles,gpuMol);
-//            counter=1;
-//        }
+        int* mola = context.getMeasurements().getMols();
+        OpenMM::Vec3* mom = context.getMeasurements().getBinMom();
+        double gpuKE = 0.0;
+        int gpuMol = 0.0;
+        for(int k=0;k<nbs;k++){
+            gpuMol += mola[k];
+        }
+        EXPECT_EQ(numParticles,gpuMol);
         integrator.step(1);
     }
     std::cout<<"Simulation completed with counter value "<<counter<<std::endl;
