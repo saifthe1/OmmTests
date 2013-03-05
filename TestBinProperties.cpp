@@ -148,13 +148,10 @@ TEST(TestBinProperties,SingleBin){
     int nbs = measurements.getNBins();
     int writeinterval = measurements.getWriteInterval();
     //start the simulation loop
-    integrator.step(1);
     int counter=0;
     std::cout<<"starting the loop\n";
     for(int frame=1;frame<400;++frame){
-        counter++;
-        OpenMM::State state = context.getState(OpenMM::State::Energy);
-        const double time = state.getTime();
+        integrator.step(1);
         int* mola = context.getMeasurements().getMols();
         OpenMM::Vec3* mom = context.getMeasurements().getBinMom();
         double gpuKE = 0.0;
@@ -163,7 +160,6 @@ TEST(TestBinProperties,SingleBin){
             gpuMol += mola[k];
         }
         EXPECT_EQ(numParticles,gpuMol);
-        integrator.step(1);
     }
     std::cout<<"Simulation completed with counter value "<<counter<<std::endl;
 }
@@ -267,10 +263,6 @@ TEST(TestBinProperties,DISABLED_TwoBins){
     int counter=0;
     std::cout<<"starting the loop\n";
     for(int frame=1;frame<400;++frame){
-        counter++;
-        OpenMM::State state = context.getState(OpenMM::State::Energy);
-        const double time = state.getTime();
-        if(counter==writeinterval){
             int* mola = context.getMeasurements().getMols();
             OpenMM::Vec3* mom = context.getMeasurements().getBinMom();
             double gpuKE = 0.0;
@@ -278,10 +270,8 @@ TEST(TestBinProperties,DISABLED_TwoBins){
             for(int k=0;k<nbs;k++){
                 gpuMol += mola[k];
             }
-            EXPECT_EQ(numParticles*counter,gpuMol);
-            counter=1;
-        }
-        integrator.step(1);
+            EXPECT_EQ(numParticles,gpuMol);
+        integrator.step(100);
     }
     std::cout<<"Simulation completed with counter value "<<counter<<std::endl;
 }
